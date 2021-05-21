@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'package:SmartCal/dbase.dart';
+import 'package:flutter/services.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 class MyCalcutor extends StatefulWidget {
@@ -42,12 +43,6 @@ class _MyCalcutorState extends State<MyCalcutor> {
       else if(value == "x^2") {
         value1 = double.parse(_output);
         fresult = (value1 * value1).toString();
-        myValue = finishZero(fresult);
-      }
-      //cube
-      else if(value == "x^3") {
-        value1 = double.parse(_output);
-        fresult = (value1 * value1 * value1).toString();
         myValue = finishZero(fresult);
       }
       //square root
@@ -150,7 +145,38 @@ class _MyCalcutorState extends State<MyCalcutor> {
     );
 
   }
+Widget ExitProgram()
+{ showDialog(
+    context: context,
+    builder: (_) {
+      return AlertDialog(
+        title: Text('Are you sure?',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25),),
+        content: Padding(
+          padding: const EdgeInsets.fromLTRB(10,0,0,20),
 
+          child: Text('you want to exit app.',style: TextStyle(fontWeight: FontWeight.w300,color: Colors.grey[500]),),
+        ),
+        actions: [
+          FlatButton(
+            onPressed: () => SystemNavigator.pop(), // passing false
+            child: Text('Yes',style: TextStyle(color:Colors.blue[600],fontSize: 20),),
+          ),
+          FlatButton(
+            onPressed: () =>Navigator.pop(context,false), // passing true
+            child: Text('No',style: TextStyle(color:Colors.red[400],fontSize: 20)),
+          ),
+        ],
+      );
+    }).then((exit) {
+  if (exit == null) return;
+
+  if (exit) {
+    // user pressed Yes button
+  } else {
+    // user pressed No button
+  }
+});
+}
   // Main contant is start
   Widget build(BuildContext context) {
 
@@ -191,7 +217,7 @@ class _MyCalcutorState extends State<MyCalcutor> {
               ),
               Column(
                 children: [
-                  OutButton("∛",Colors.grey[100],Colors.grey[500],80),
+                  OutButton("x^2",Colors.grey[100],Colors.grey[500],80),
                   OutButton("/",Colors.grey[100],Colors.blue[600],80),
                   OutButton("8",Colors.white,Colors.black,80),
                   OutButton("5",Colors.white,Colors.black,80),
@@ -201,7 +227,18 @@ class _MyCalcutorState extends State<MyCalcutor> {
               ),
               Column(
                 children: [
-                  OutButton("x^2",Colors.grey[100],Colors.grey[500],80),
+                  Container(
+                    height: 80,
+                    width: 90,
+                    child:  FlatButton(
+                        shape: Border.all(color:Colors.grey[500],width: 0.1),
+                        color: Colors.grey[100],
+                        child: Text("ReD",style: TextStyle(fontSize: 25,color: Colors.blue[600],fontWeight:FontWeight.w400,fontFamily: "Roboto",),),
+                        onPressed:(){
+                          insertData();
+                        }
+                    ),
+                  ),
                   OutButton("x",Colors.grey[100],Colors.blue[600],80),
                   OutButton("9",Colors.white,Colors.black,80),
                   OutButton("6",Colors.white,Colors.black,80),
@@ -218,9 +255,9 @@ class _MyCalcutorState extends State<MyCalcutor> {
                     child:  FlatButton(
                         shape: Border.all(color:Colors.grey[500],width: 0.1),
                         color: Colors.grey[100],
-                        child: Text("Id",style: TextStyle(fontSize: 25,color: Colors.grey[500],fontWeight:FontWeight.w400,fontFamily: "Roboto",),),
+                        child: Text("Exit",style: TextStyle(fontSize: 25,color: Colors.blue[600],fontWeight:FontWeight.w400,fontFamily: "Roboto",),),
                         onPressed:(){
-                          insertData();
+                          ExitProgram();
                         }
                     ),
                   ),
