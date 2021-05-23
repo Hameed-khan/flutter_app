@@ -52,14 +52,8 @@ class _MyCalcutorState extends State<MyCalcutor> {
         fresult = ((value1*(1/2))).toString();
         myValue = finishZero(fresult);
       }
-      //cube root
-      else if(value == "∛") {
-        value1 = double.parse(_output);
 
-        fresult = ((value1*(1/3))).toStringAsFixed(3);
 
-        myValue = finishZero(fresult);
-      }
       // pressing equal button
       else if(value == "=") {
         try{
