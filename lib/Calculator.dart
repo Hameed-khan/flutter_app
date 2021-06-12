@@ -1,16 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
-import 'package:SmartCal/dbase.dart';
 import 'package:flutter/services.dart';
 import 'package:math_expressions/math_expressions.dart';
-
+import 'package:firebase_database/firebase_database.dart';
+import 'package:SmartCal/history.dart';
 class MyCalcutor extends StatefulWidget {
   @override
   _MyCalcutorState createState() => _MyCalcutorState();
 }
 
 class _MyCalcutorState extends State<MyCalcutor> {
-
+     FirebaseDatabase db = FirebaseDatabase.instance;
+     // int recordSmartCal = 0;
+     Map contant;
 
   @override
   //Variable
@@ -106,23 +108,11 @@ class _MyCalcutorState extends State<MyCalcutor> {
     return v;
 
   }
-  // Database instance
-  final dbhelper = Databasehelper.instance;
-  // This function is used for inserting values in database
-  void insertData() async{
-    hour= now.hour;
-    mint = now.minute;
-    Map<String,dynamic > row =
-    {
-      Databasehelper.columnColcution:_output,
-      Databasehelper.columnFinalResult: myValue,
-      Databasehelper.columnTime:hour,
-      Databasehelper.columnTimeMin:mint
-    };
-    final id = await dbhelper.insert(row);
-    print(id);
+  //Real time database inserting value
+  realTimeDataBaseInserting(String equestion,String solution)
+  {
+    
   }
-
   // This function is used for printing all button
   Widget OutButton(String text,Color color,Color textColor,double value) {
     return  Container(
@@ -173,7 +163,7 @@ Widget ExitProgram()
 }
   // Main contant is start
   Widget build(BuildContext context) {
-
+    final ref = db.reference().child('recordSmartCal');
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -229,7 +219,13 @@ Widget ExitProgram()
                         color: Colors.grey[100],
                         child: Text("ReD",style: TextStyle(fontSize: 25,color: Colors.blue[600],fontWeight:FontWeight.w400,fontFamily: "Roboto",),),
                         onPressed:(){
-                          insertData();
+                          // recordSmartCal++;
+                          Map<String,String> Values = {
+                            'equestion':_output,
+                            'solution':myValue,
+                          };
+                          ref.push().set(Values).asStream();
+                          
                         }
                     ),
                   ),

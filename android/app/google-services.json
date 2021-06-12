@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "582267102611",
+    "project_id": "smartcalculator-c3c77",
+    "storage_bucket": "smartcalculator-c3c77.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582267102611:android:4387d169e4c3b0dcf87466",
+        "android_client_info": {
+          "package_name": "flutterapp.flutter.example.flutter_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "582267102611-4qvi92g5tfnudj2ojug3n33gugg21gsn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "flutterapp.flutter.example.flutter_app",
+            "certificate_hash": "49975f2cd87c52f26824f91bd52653f497677ef4"
+          }
+        },
+        {
+          "client_id": "582267102611-epgfncq77te45quor75snv9ontl63del.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADvgeyevAwrumAHf43ye7x0ULRSGl7xAM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "582267102611-epgfncq77te45quor75snv9ontl63del.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

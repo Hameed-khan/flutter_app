@@ -1,6 +1,6 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart';
-import './dbVoice.dart';
 void main()=>{runApp(MApp())};
 
 class MApp extends StatefulWidget {
@@ -25,21 +25,8 @@ class _MAppState extends State<MApp> {
   //for showing text on the output
   String text = "";
   double accuracy = 1.0;
-  DateTime now  = new DateTime.now();
-  final dbhelp = Databasehelp.instance;
-  void insertData() async{
-    hour= now.hour;
-    mint = now.minute;
-    Map<String,dynamic > row =
-    {
-      Databasehelp.columnEquestion:question,
-      Databasehelp.columnResult:finalValueResult,
-      Databasehelp.columnTime:hour,
-      Databasehelp.columnTimeMin:mint
-    };
-    final id = await dbhelp.insert(row);
-    print(id);
-  }
+    final ref = FirebaseDatabase.instance.reference().child('voiceRecordSmartCal');
+    Map contant;
   @override
   //we need initialize function to initialize our speech to text plugin
   void iniState()async
@@ -80,7 +67,7 @@ class _MAppState extends State<MApp> {
         FloatingActionButton(
           // this is calling out _listening function
           onPressed: _listen,
-          tooltip: "Increment",
+          tooltip: "Inserting Data in DB",
           child: Icon(
               isListening?Icons.add:Icons.play_circle_fill
           ),
@@ -89,8 +76,12 @@ class _MAppState extends State<MApp> {
           child:Text("Pressed on button Calculate value",style: TextStyle(fontSize: 18),),),
         MaterialButton(color:Colors.blue[500],child: Text("Voice History"),
             onPressed:(){
-              insertData();
-
+              Map<String,String> voiceInputRecordMap =
+                  {
+                    'equestion':text,
+                    'solution':finalValueResult,
+                  };
+              ref.push().set(voiceInputRecordMap);
             } ),
         Card(
           child: Column(
